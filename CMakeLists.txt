@@ -141,23 +141,34 @@ endif(ENABLE_CUDA)
 #---[ OpenCL ]--------------------------
 if(ENABLE_OPENCL)
   # Look in some default places for OpenCL and set OPENCL_ROOT
+  find_path(
+    OpenCL_INCLUDE_DIR
+    NAMES
+      CL/cl.h
+  )
+
+  find_library(
+    OpenCL_LIBRARY
+    NAMES 
+      OpenCL libOpenCL
+  )
 
   # Search in user specified path first
-  find_path(OPENCL_ROOT
-    NAMES include/CL/cl.h
-    PATHS
-    ENV   OPENCL_PATH
-    DOC   "OPENCL root location"
-    NO_DEFAULT_PATH)
+  # find_path(OPENCL_ROOT
+  #   NAMES include/CL/cl.h
+  #   PATHS
+  #   ENV   OPENCL_PATH
+  #   DOC   "OPENCL root location"
+  #   NO_DEFAULT_PATH)
 
-  # Now search in default path
-  find_path(OPENCL_ROOT
-    NAMES include/CL/cl.h
-    PATHS /usr/ /opt/rocm/opencl /usr/local/cuda
-    DOC   "OPENCL root location")
+  # # Now search in default path
+  # find_path(OPENCL_ROOT
+  #   NAMES include/CL/cl.h
+  #   PATHS /usr/ /opt/rocm/opencl /usr/local/cuda
+  #   DOC   "OPENCL root location")
 
-  # Trick CMake's default OpenCL module to look in our directory
-  set(ENV{AMDAPPSDKROOT} ${OPENCL_ROOT})
+  # # Trick CMake's default OpenCL module to look in our directory
+  # set(ENV{AMDAPPSDKROOT} ${OPENCL_ROOT})
 
   find_package(OpenCL)
 
@@ -204,7 +215,10 @@ endif(ENABLE_DPCPP)
 
 #---[ HIP ]-----------------------------
 if(ENABLE_HIP)
-  find_package(HIP)
+  find_package(hip)
+  if(hip_FOUND)
+    set(HIP_FOUND TRUE)
+  endif()
 
   if(HIP_FOUND)
     set(OCCA_HIP_ENABLED 1)

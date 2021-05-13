@@ -18,10 +18,12 @@ namespace occa {
     memory::~memory() {
       if (isOrigin) {
         if (useHostPtr) {
-          OCCA_HIP_ERROR("Device: hostFree()",
+          OCCA_HIP_ERROR("Memory: hostFree()",
                          hipHostFree(ptr));
         } else if (hipPtr) {
-          hipFree((void*) hipPtr);
+          //@todo: Wrap in OCCA_HIP_ERROR
+          OCCA_HIP_ERROR("Memory: free()",
+                          hipFree((void*) hipPtr));
         }
       }
       ptr = nullptr;

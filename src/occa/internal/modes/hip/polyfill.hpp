@@ -4,7 +4,8 @@
 #define OCCA_INTERNAL_MODES_HIP_POLYFILL_HEADER
 
 #if OCCA_HIP_ENABLED
-#  include <hip/hip_runtime_api.h>
+// #  include <hip/hip_runtime_api.h>
+#include <hip/hip_runtime.h>
 #else
 
 #include <sys/types.h>
