@@ -210,6 +210,8 @@ if(ENABLE_DPCPP)
   target_include_directories(libocca PRIVATE ${SYCL_INCLUDE_DIRS})
   target_link_libraries(libocca PRIVATE ${SYCL_LIBRARIES})
   target_compile_options(libocca BEFORE PRIVATE "${SYCL_CXX_FLAGS}")
+else (ENABLE_DPCPP)
+  set(OCCA_DPCPP_ENABLED 0)
 endif(ENABLE_DPCPP)
 #=======================================
 
@@ -232,7 +234,7 @@ if(ENABLE_HIP)
     target_include_directories(libocca PRIVATE ${HIP_INCLUDE_DIRS})
     target_link_libraries(libocca PRIVATE ${HIP_LIBRARIES})
   else (HIP_FOUND)
-    set(OCCA_HIP_ENABLED 0)
+set(OCCA_HIP_ENABLED 0)
   endif(HIP_FOUND)
 endif(ENABLE_HIP)
 #=======================================

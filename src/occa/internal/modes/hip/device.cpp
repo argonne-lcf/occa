@@ -67,17 +67,17 @@ namespace occa {
 
       std::string arch = getDeviceArch(deviceID, archMajorVersion, archMinorVersion);
       std::string archFlag;
-      if (startsWith(arch, "sm_")) {
-        archFlag = " -arch=" + arch;
-      } else if (startsWith(arch, "gfx")) {
-#if HIP_VERSION >= 305
-        archFlag = " --amdgpu-target=" + arch;
-#else
-        archFlag = " -t " + arch;
-#endif
-      } else {
-        OCCA_FORCE_ERROR("Unknown HIP arch");
-      }
+//       if (startsWith(arch, "sm_")) {
+//         archFlag = " -arch=" + arch;
+//       } else if (startsWith(arch, "gfx")) {
+// #if HIP_VERSION >= 305
+//         archFlag = " --amdgpu-target=" + arch;
+// #else
+//         archFlag = " -t " + arch;
+// #endif
+//       } else {
+//         OCCA_FORCE_ERROR("Unknown HIP arch");
+//       }
 
       kernelProps["compiler_flag_arch"] = archFlag;
     }
@@ -277,11 +277,11 @@ namespace occa {
 
       //---[ Compiling Command ]--------
       command << compiler
-              << " --genco"
+	//              << " --genco"
 #if defined(__HIP_PLATFORM_NVCC___) || (HIP_VERSION >= 305)
               << ' ' << compilerFlags
 #else
-              << " -f=\\\"" << compilerFlags << "\\\""
+	//              << " -f=\\\"" << compilerFlags << "\\\""
 #endif
               << ' ' << hipccCompilerFlags
 #if defined(__HIP_PLATFORM_NVCC___) || (HIP_VERSION >= 305)
