@@ -25,12 +25,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-option(ENABLE_OPENMP "Build with OpenMP if available" ON)
+option(ENABLE_OPENMP "Build with OpenMP if available" OFF)
 option(ENABLE_CUDA   "Build with CUDA if available"   ON)
 option(ENABLE_OPENCL "Build with OpenCL if available" ON)
 option(ENABLE_HIP    "Build with HIP if available" ON)
 option(ENABLE_METAL  "Build with Metal if available" ON)
-option(ENABLE_DPCPP "Build with SYCL/DPCPP if available" ON)
+option(ENABLE_DPCPP "Build with SYCL/DPCPP if available" OFF)
 option(ENABLE_MPI    "Build with MPI if available" ON)
 
 option(ENABLE_TESTS    "Build tests"               OFF)
@@ -187,6 +187,7 @@ endif(ENABLE_OPENCL)
 #=======================================
 
 #---[ SYCL/DPCPP ]-----------------------
+set(ENABLE_DPCPP OFF)
 if(ENABLE_DPCPP)
   find_path(
     SYCL_INCLUDE_DIRS
@@ -213,6 +214,7 @@ if(ENABLE_DPCPP)
 else (ENABLE_DPCPP)
   set(OCCA_DPCPP_ENABLED 0)
 endif(ENABLE_DPCPP)
+ set(OCCA_DPCPP_ENABLED 0)
 #=======================================
 
 #---[ HIP ]-----------------------------
@@ -221,7 +223,7 @@ if(ENABLE_HIP)
   if(hip_FOUND)
     set(HIP_FOUND TRUE)
   endif()
-
+ set(OCCA_DPCPP_ENABLED 0)
   if(HIP_FOUND)
     set(OCCA_HIP_ENABLED 1)
 

@@ -3,10 +3,10 @@
 #ifndef OCCA_MODES_DPCPP_POLYFILL_HEADER
 #define OCCA_MODES_DPCPP_POLYFILL_HEADER
 
-#if OCCA_DPCPP_ENABLED
+//#if OCCA_DPCPP_ENABLED
 // As of SYCL2020 this can change to SYCL/sycl.hpp
-#include <CL/sycl.hpp>
-#else
+//#include <CL/sycl.hpp>
+//#else
 #include <vector>
 namespace sycl
 {
@@ -386,6 +386,6 @@ namespace sycl
   }
 
 } // namespace sycl
-#endif
+//#endif
 
 #endif

@@ -5,7 +5,8 @@
 
 module purge
 module use /home/bertoni/modulefiles
-module load hipcl/20210525-release
+module load hipcl/experimental-13
+#module load hipcl
 module load intel_compute_runtime
 module load cmake
 
@@ -53,4 +54,9 @@ cmake -S . -B ${BUILD_DIR} \
 #cmake --build build 
 cd build
 export OCCA_DPCPP_ENABLED=0
-make -j8 VERBOSE=1
+make -j24 VERBOSE=1
+
+cd examples/cpp/01_add_vectors/
+clang++ -std=c++17  -o main  main.cpp -I../../../${BUILD_DIR}/include -I../../../src -I../../../include -L../../../${BUILD_DIR}/lib    -locca -lm -lrt -ldl -lhipcl -lOpenCL
+
+OCCA_CXXFLAGS="-std=c++11 -lhipcl -lOpenCL" OCCA_LDFLAGS="-lhipcl -lOpenCL" OCCA_VERBOSE=1 OCCA_HIP_COMPILER="clang++ -c -lhipcl -lOpenCL" OCCA_HIP_COMPILER_FLAGS="-std=c++11 -lhipcl -lOpenCL" OCCA_CXX="clang++ -lhipcl -lOpenCL"   LD_LIBRARY_PATH=../../../build/lib:$LD_LIBRARY_PATH ./main -d "{mode: 'HIP',device_id: 0}"
