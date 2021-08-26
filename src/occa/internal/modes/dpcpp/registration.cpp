@@ -10,11 +10,11 @@ namespace occa {
         mode_t("dpcpp") {}
 
     bool dpcppMode::init() {
-      //#if OCCA_DPCPP_ENABLED
-      //      return occa::dpcpp::isEnabled();
-      //#else
-      return false;
-      //#endif
+      #if OCCA_DPCPP_ENABLED
+           return occa::dpcpp::isEnabled();
+      #else
+        return false;
+      #endif
     }
 
     styling::section& dpcppMode::getDescription() {
