@@ -58,6 +58,9 @@ namespace occa {
 
         if (!success) return;
         setupKernels();
+
+        if (!success) return;
+        setupAtomics();
       }
 
       std::string openclParser::getOuterIterator(const int loopIndex) {
@@ -274,6 +277,24 @@ namespace occa {
           if (type.isPointerType())
             arg->add(0,global);
         }
+      }
+
+      void openclParser::setupAtomics() {
+        success &= attributes::atomic::applyCodeTransformation(
+          root,
+          transformAtomicBlockStatement,
+          transformAtomicBasicExpressionStatement
+        );
+      }
+
+      bool openclParser::transformAtomicBlockStatement(blockStatement &blockSmnt) {
+        blockSmnt.printError("Unable to transform general @atomic code");
+        return false;
+      }
+
+      bool openclParser::transformAtomicBasicExpressionStatement(expressionStatement &exprSmnt) {
+        exprSmnt.printError("Unable to transform general @atomic code");
+        return false;
       }
 
     }

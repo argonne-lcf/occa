@@ -50,6 +50,12 @@ namespace occa {
         void migrateLocalDecls(functionDeclStatement &kernelSmnt);
 
         void setKernelQualifiers(function_t &function);
+        
+        void setupAtomics();
+
+        bool transformAtomicBlockStatement(blockStatement &blockSmnt);
+
+        bool transformAtomicBasicExpressionStatement(expressionStatement &exprSmnt);
       };
     }
   }
