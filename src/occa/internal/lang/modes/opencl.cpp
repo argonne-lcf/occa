@@ -293,8 +293,78 @@ namespace occa {
       }
 
       bool openclParser::transformAtomicBasicExpressionStatement(expressionStatement &exprSmnt) {
-        exprSmnt.printError("Unable to transform general @atomic code");
-        return false;
+       const opType_t &opType = expr(exprSmnt.expr).opType();
+
+        printer pout;
+        if (opType & operatorType::unary) {
+          // Cases:
+          //   @atomic --i;
+          //   @atomic i--;
+          //   @atomic ++i;
+          //   @atomic i++;
+          expr variable;
+          if (opType & operatorType::leftUnary) {
+            variable = ((leftUnaryOpNode*) exprSmnt.expr)->value;
+          }
+          else if (opType & operatorType::rightUnary) {
+            variable = ((rightUnaryOpNode*) exprSmnt.expr)->value;
+          }
+          // Build source code
+          if (opType & operatorType::increment) {
+            pout << "atomic_fetch_add_explicit(&" << expr::parens(variable) 
+              << ", 1, memory_order_relaxed);";
+          } else if (opType & operatorType::decrement) {
+            pout << "atomic_fetch_add_explicit((&" << expr::parens(variable) 
+              << ", 1, memory_order_relaxed);";
+          } else {
+            exprSmnt.printError("Unable to transform @atomic code");
+            return false;
+          }
+        }
+        else if (opType & operatorType::binary) {
+          // Cases:
+          //   @atomic lhs += rhs;
+          //   @atomic lhs -= rhs;
+          //   @atomic lhs &= rhs;
+          //   @atomic lhs |= rhs;
+          //   @atomic lhs ^= rhs;
+          // todo: Check that types are supported for a given operator
+          binaryOpNode &binaryNode = (binaryOpNode&) *exprSmnt.expr;
+          expr variable = binaryNode.leftValue;
+          expr value = binaryNode.rightValue;
+          if (opType & operatorType::addEq) {
+            pout << "atomic_fetch_add_explicit(&" << expr::parens(variable) 
+              << ", " << value << ", memory_order_relaxed);";
+          } else if (opType & operatorType::subEq) {
+            pout << "atomic_fetch_sub_explicit(&" << expr::parens(variable) 
+              << ", " << value << ", memory_order_relaxed);";
+          } else if (opType & operatorType::andEq) {
+            pout << "atomic_fetch_and_explicit(&" << expr::parens(variable) 
+              << ", " << value << ", memory_order_relaxed);";
+          } else if (opType & operatorType::orEq) {
+            pout << "atomic_fetch_or_explicit(&" << expr::parens(variable) 
+              << ", " << value << ", memory_order_relaxed);";
+          } else if (opType & operatorType::xorEq) {
+            pout << "atomic_fetch_xor_explicit(&" << expr::parens(variable) 
+              << ", " << value << ",memory_order_relaxed);";
+          } else {
+            exprSmnt.printError("Unable to transform @atomic code");
+            return false;
+          }
+        }
+
+        statement_t &atomicSmnt = (
+          *(new sourceCodeStatement(
+              exprSmnt.up,
+              exprSmnt.source,
+              pout.str()
+            ))
+        );
+
+        exprSmnt.replaceWith(atomicSmnt);
+        delete &exprSmnt;
+
+        return true;
       }
 
     }

@@ -53,9 +53,9 @@ namespace occa {
         
         void setupAtomics();
 
-        bool transformAtomicBlockStatement(blockStatement &blockSmnt);
+        static bool transformAtomicBlockStatement(blockStatement &blockSmnt);
 
-        bool transformAtomicBasicExpressionStatement(expressionStatement &exprSmnt);
+        static bool transformAtomicBasicExpressionStatement(expressionStatement &exprSmnt);
       };
     }
   }
