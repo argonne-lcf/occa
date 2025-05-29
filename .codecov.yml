@@ -19,9 +19,10 @@ ignore:
   - scripts
   - include/occa/scripts
   # Auto-generated files
-  - include/occa/core/kernelOperators.hpp_codegen
-  - src/core/kernelOperators.cpp_codegen
-  - src/occa/internal/utils/runFunction.cpp_codegen
+  - include/codegen/kernelOperators.cpp_codegen
+  - include/codegen/kernelOperators.hpp_codegen
+  - include/codegen/macros.hpp_codegen
+  - include/codegen/runFunction.cpp_codegen
   # Exception is not tracked properly
   - src/utils/exception.cpp
   # Modes that can't be tested with CI

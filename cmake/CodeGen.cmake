@@ -28,10 +28,16 @@ else()
   endif()
 endif()
 
-#    Set installtion of files required in header
+# Set installtion of files required in header
 install(
-  FILES ${OCCA_BUILD_DIR}/include/codegen/kernelOperators.hpp_codegen
-  DESTINATION include/occa/core/codegen)
+  FILES ${OCCA_BUILD_DIR}/include/codegen/kernelOperators.cpp_codegen
+  DESTINATION include/codegen)
+install(
+ FILES ${OCCA_BUILD_DIR}/include/codegen/kernelOperators.hpp_codegen
+ DESTINATION include/codegen)
 install(
   FILES ${OCCA_BUILD_DIR}/include/codegen/macros.hpp_codegen
-  DESTINATION include/occa/defines/codegen)
+  DESTINATION include/codegen)
+install(
+  FILES ${OCCA_BUILD_DIR}/include/codegen/runFunction.cpp_codegen
+  DESTINATION include/codegen)

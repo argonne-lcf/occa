@@ -7,5 +7,6 @@
 #include <occa/loops.hpp>
 #include <occa/types.hpp>
 #include <occa/utils.hpp>
+#include <occa/defines.hpp>
 
 #endif

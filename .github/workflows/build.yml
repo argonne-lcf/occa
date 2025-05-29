@@ -84,6 +84,9 @@ jobs:
       uses: mxschmitt/action-tmate@v3.13
       if: ${{ inputs.debug_enabled }}
 
+    - name: Set OCCA install directory
+      run: echo "OCCA_INSTALL_DIR=${PWD}/install" >> ${GITHUB_ENV}
+
     - name: add oneAPI to apt
       if: ${{ matrix.useoneAPI }}
       shell: bash
@@ -104,14 +107,14 @@ jobs:
 
     - name: Compiler info
       if: ${{ !matrix.useCMake }}
-      run: make -j 16 info
+      run: make PREFIX=${OCCA_INSTALL_DIR} -j 16 info
 
     - name: CMake configure
       if: ${{ matrix.useCMake && !matrix.useoneAPI}}
       run: |
         cmake -S . -B build \
         -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
-        -DCMAKE_INSTALL_PREFIX=install \
+        -DCMAKE_INSTALL_PREFIX=${OCCA_INSTALL_DIR} \
         -DCMAKE_C_COMPILER=${CC} \
         -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_Fortran_COMPILER=${FC} \
@@ -128,7 +131,7 @@ jobs:
         source /opt/intel/oneapi/setvars.sh
         cmake -S . -B build \
         -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
-        -DCMAKE_INSTALL_PREFIX=install \
+        -DCMAKE_INSTALL_PREFIX=${OCCA_INSTALL_DIR} \
         -DCMAKE_C_COMPILER=${CC} \
         -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_Fortran_COMPILER=${FC} \
@@ -136,21 +139,21 @@ jobs:
         -DOCCA_ENABLE_EXAMPLES=ON \
         -DOCCA_ENABLE_FORTRAN=${OCCA_FORTRAN_ENABLED}
     
-    - name: CMake build
+    - name: CMake build and install
       if: ${{ matrix.useCMake && !matrix.useoneAPI}}
       run: |
-        cmake --build build --parallel 16
+        cmake --build build --target install --parallel 16
 
-    - name: CMake build
+    - name: CMake build and install
       if: ${{ matrix.useCMake && matrix.useoneAPI}}
       env:
         OCCA_CC: ${{ matrix.CC }}
         OCCA_CXX: ${{ matrix.CXX }}
       run: |
         source /opt/intel/oneapi/setvars.sh
-        cmake --build build --parallel 16
+        cmake --build build --target install --parallel 16
 
-    - name: Compile library
+    - name: Compile library and install
       if: ${{ !matrix.useCMake }}
       run: make -j 16
 
