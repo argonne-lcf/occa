@@ -82,3 +82,6 @@ install(
   DESTINATION
     ${PackageConfigInstallLocation}
 )
+
+# export(TARGETS libocca NAMESPACE ${ExportNamespace})
+# add_library(OCCA::libocca ALIAS libocca)

@@ -318,9 +318,12 @@ add_subdirectory(bin)
 include(ExportAndPackageConfig)
 
 install(CODE
-  "configure_file(
-    ${OCCA_SOURCE_DIR}/modulefiles/occa
-    ${CMAKE_INSTALL_PREFIX}/modulefiles/occa
-    @ONLY
+"configure_file(
+  ${CMAKE_SOURCE_DIR}/modulefiles/occa
+  ${CMAKE_INSTALL_PREFIX}/modulefiles/occa
+  @ONLY
   )"
-)
+  )
+
+add_library(OCCA::libocca ALIAS libocca)
+add_subdirectory(examples_new)

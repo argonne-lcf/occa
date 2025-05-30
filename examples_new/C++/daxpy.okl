@@ -1,0 +1,8 @@
+#define alpha 1.0
+@kernel void daxpy(const int N, @restrict const double* x, @restrict double* y) {
+  @outer for (int o=0; o < N; o+= 1024) {
+    @inner for (int i = 0; i < 1024; ++i) {
+      y[i+o] += alpha * x[i+o];
+    }
+  }
+}
