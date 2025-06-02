@@ -23,7 +23,6 @@ namespace {
 
 }
 
-
 int main() {
 
   int device_id = 0;

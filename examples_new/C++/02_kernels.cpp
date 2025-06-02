@@ -38,7 +38,7 @@ int main() {
 
   // Create a kernel defined in an external file
   const std::string kernel_name = "daxpy";
-  const std::string kernel_file = "daxpy.okl";
+  const std::string kernel_file = "kernels/daxpy.okl";
   occa::kernel daxpy_kernel = occa_device.buildKernel(kernel_file,kernel_name);
   // Kernel is jitted during construction
 
