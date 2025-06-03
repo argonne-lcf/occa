@@ -248,7 +248,7 @@ if(OCCA_ENABLE_METAL AND APPLE)
   endif()
 endif()
 #=======================================
-
+  
 if(NOT OCCA_IS_TOP_LEVEL)
 # OCCA is being built as a subdirectory in another project
   set(OCCA_OPENMP_ENABLED ${OCCA_OPENMP_ENABLED} PARENT_SCOPE)
