@@ -14,9 +14,9 @@ int main(const int argc, const char **argv) {
     occa::device({
       {"mode", "Serial"}
     }),
-    occa::device({
-      {"mode", "OpenMP"}
-    }),
+    // occa::device({
+    //   {"mode", "OpenMP"}
+    // }),
     occa::device({
       {"mode", "CUDA"},
       {"device_id", 0}

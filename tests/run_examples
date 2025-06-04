@@ -54,7 +54,7 @@ failed_examples=""
 for mode in $("${OCCA_DIR}/bin/occa" modes); do
     case "${mode}" in
         Serial) device="{mode: 'Serial'}";;
-        OpenMP) device="{mode: 'OpenMP'}";;
+        # OpenMP) device="{mode: 'OpenMP'}";;
         CUDA)   device="{mode: 'CUDA', device_id: 0}";;
         HIP)    device="{mode: 'HIP', device_id: 0}";;
         OpenCL) device="{mode: 'OpenCL', platform_id: 0, device_id: 0}";;

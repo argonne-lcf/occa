@@ -9,7 +9,7 @@ add_subdirectory(09_native_cpp_kernels)
 add_subdirectory(10_native_c_kernels)
 add_subdirectory(11_native_cuda_kernels)
 add_subdirectory(12_native_opencl_kernels)
-add_subdirectory(13_openmp_interop)
+#add_subdirectory(13_openmp_interop)
 add_subdirectory(14_cuda_interop)
 add_subdirectory(17_memory_pool)
 

@@ -9,7 +9,7 @@
 #include <occa/internal/utils/sys.hpp>
 
 #include <occa/internal/lang/modes/serial.hpp>
-#include <occa/internal/lang/modes/openmp.hpp>
+// #include <occa/internal/lang/modes/openmp.hpp>
 #include <occa/internal/lang/modes/cuda.hpp>
 #include <occa/internal/lang/modes/hip.hpp>
 #include <occa/internal/lang/modes/opencl.hpp>
@@ -171,9 +171,9 @@ namespace occa {
                   {"serial", [](const json &params) {
                        return std::make_unique<lang::okl::serialParser>(params);
                    }},
-                  {"openmp", [](const json &params) {
-                       return std::make_unique<lang::okl::openmpParser>(params);
-                   }},
+                  // {"openmp", [](const json &params) {
+                  //      return std::make_unique<lang::okl::openmpParser>(params);
+                  //  }},
                   {"cuda", [](const json &params) {
                        return std::make_unique<lang::okl::cudaParser>(params);
                    }},
