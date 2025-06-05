@@ -31,6 +31,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include(CheckRequiredCompilerFeatures)
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(OCCA_ENABLE_OPENMP "Build with OpenMP if available" ON)
@@ -80,12 +82,6 @@ if (OCCA_CLANG_BASED_TRANSPILER)
 endif()
 
 include(SetCompilerFlags)
-include(CheckCXXCompilerFlag)
-
-check_cxx_compiler_flag("-fno-strict-aliasing" COMPILER_SUPPORTS_NO_STRICT_ALIASING)
-if(COMPILER_SUPPORTS_NO_STRICT_ALIASING)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing")
-endif()
 
 string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_UPPER)
 message("-- System     : ${CMAKE_SYSTEM}")
