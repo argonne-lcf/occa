@@ -1,0 +1,28 @@
+@kernel void gemm(const int N, @restrict const double* x, @restrict const double *A, @restrict double* y) {
+  @outer for (int n = 0; n < N; ++n) {
+    @shared double s_A[p_M * p_M];
+    @shared double s_y[p_M * p_M];
+
+    @inner for (int i = 0; i < p_M; ++i) {
+      @inner for (int j = 0; j < p_M; ++j) {
+        s_A[j][i] = A[j * p_M + i];
+        s_y[j][i] = y[j * p_M + i + n * p_M * p_M];
+      }
+    }
+
+    double v_ij = 0;
+    @inner for (int i = 0; i < p_M; ++i) {
+      @inner for (int j = 0; j < p_M; ++j) {
+        for (int k = 0; k < p_M; k++) {
+          v_ij += s_A[i][k] * s_y[k][j];
+        }
+      }
+    }
+
+    @inner for (int i = 0; i < p_M; ++i) {
+      @inner for (int j = 0; j < p_M; ++j) {
+        x[i * p_M + j + n * p_M * p_M] = v_ij;
+      }
+    }
+  }
+}
