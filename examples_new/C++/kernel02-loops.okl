@@ -1,0 +1,65 @@
+// The Mandelbrot set: a fractal based on the iteration 
+// $z_0 = c$, $z_{n} = z{n-1}^2 + c$ for some $c$
+// We use a 2D Grid of values for (complex) $c$ 
+// Elements in the mandelbrot set are values of $c$ for which the iteration stays bounded
+// The time it takes for the iteration to become unbounded colors the image
+
+@kernel void mandelbrot(const float xMax,
+                        const float yMax,
+                        const float xMin,
+                        const float yMin,
+                        const int maxIter,
+                        const int numX,
+                        const int numY,
+                        int *iters) {
+  const int blockSize = 16; 
+
+
+  const float dx = (xMax - xMin) / numX;
+  const float dy = (yMax - yMin) / numY;
+
+  // Use two outer loops to loop over the `rows` and `columns` of the image in blocks
+  @outer for (int r0 = 0; r0 < numY; r0 += blockSize) {
+    @outer for (int c0 = 0; c0 < numX; c0 += blockSize) {
+
+      // Use two inner loops to loop through the threads within the 2D block
+      @inner for (int ty = 0; ty < blockSize; ++ty) {
+        @inner for (int tx = 0; tx < blockSize; ++tx) {
+
+          const int r = r0 + ty;
+          const int c = c0 + tx;
+
+          if (r < numY && c < numX) {
+            // Calculate the value of the complex $c$ based on location in the image 
+            const float cy = yMin + r * dy;
+            const float cx = xMin + c * dx;
+
+            // Setup and start main iteration
+            // Note: this process is inherently sequential, since 
+            // z_{n+1} depends on z_n, so no parallel loops are used here
+            float zx = 0.f;
+            float zy = 0.f;
+            int count = 0;
+            float zx2, zy2, zx_old;
+
+            for (int it = 0; it < maxIter; ++it) {
+              zx2 = zx * zx;
+              zy2 = zy * zy;
+
+              if (zx2 + zy2 < 4.f) {
+                ++count;
+                zx_old = zx;
+                zx = zx2 - zy2 + cx;
+                zy = 2.f * zx_old * zy + cy;
+              }
+            }
+            // Record how soon the sequence became unbounded
+            iters[r * numX + c] = count;
+            
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,23 @@
+
+@kernel void math(const int n,
+                  const float *A,
+                  float *sinA,
+                  float *logA) {
+    @outer  for (int i = 0; i < n; i+= 16) {
+        @inner for (int j=0; j<16; ++j){
+            float threadVal = A[i+j]; 
+            // Most math functions can be used as expected, without any pre- or postfixes
+            sinA[i+j] = sin(threadVal);
+            logA[i+j] = log(abs(threadVal));
+            // Don't do this: log(fabs(threadVal)); 
+
+        }
+       
+        
+    }
+    
+}
+
+
+                            
+

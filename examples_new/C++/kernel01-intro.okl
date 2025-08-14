@@ -1,0 +1,21 @@
+// All kernels are declared with the @kernel tag. Kernels must have a void return type. 
+// Kernel arguments follow usual C++ syntax
+@kernel void fillKernel(const int entries,
+                        const float *a,
+                        const float value) {
+  // Most kernels take the form of a for loop. 
+  // The @outer tag corresponds to the launch of a kernel.
+  // The @inner tag corresponds to a thread block
+  // All kernels need one outer and one inner for loop
+  // We increment the outer loop represents looping through blocks,
+  // while the inner loop represents looping through threads in a block
+  int blockSize = 1024;   
+  
+  @outer for(int T=0; T<entries; T+=blockSize){
+    @inner for (int i = 0; i < blockSize; ++i;) {
+        if (i + T < entries)
+          a[i + T] = value;
+    }
+  }
+}
+

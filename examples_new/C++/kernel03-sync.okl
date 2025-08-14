@@ -1,0 +1,26 @@
+
+@kernel void reverse_vectors(const int n,
+                             float *A) {
+    @outer  for (int i = 0; i < n; ++i) {
+        // @exclusive float threadElement; 
+        @inner for (int j=0; j<n; ++j){
+            // threadElement = A[i*m + j];
+            // // Wait until all threads are done reading their value to write output
+            // @barrier();
+            // A[j*m + i] = threadElement;
+
+        }
+        // Alternatively, OCCA automatically adds barries between inner loops
+        // @inner for (int j=0; j<M; ++j){
+        //     A[j*M + i] = threadElement;
+        // }
+        
+    }
+    
+}
+
+// todo make vector reverse instead
+// out of place transpose or some kind of other swap 
+
+                            
+

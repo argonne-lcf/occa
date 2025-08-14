@@ -1,0 +1,44 @@
+@kernel void reduction(const int entries,
+                       const float *vec,
+                       float *totalSum) {
+  int block = 64; 
+
+  // Partial reduction of vector using loop tiles of size block (power of 2)
+  @outer for (int group = 0; group < ((entries + block - 1) / block); ++group) {
+    // Declare shared memory of size `block` to be used by each block
+    @shared float s_vec[block];
+
+
+    // Load values into shared memory 
+    @inner for (int item = 0; item < block; ++item) {
+      if ((group * block + item) < entries) {
+        s_vec[item] = vec[group * block + item];
+      } else {
+        s_vec[item] = 0;
+      }
+    }
+
+    // Inner loops launched in succession automatically have a barrier inserted between 
+    // For applications that don't require a barrier, use @nobarrier in between. 
+
+
+    // Do a partial reduction in powers of 2 
+    for (int alive = ((block + 1) / 2); 0 < alive; alive /= 2) {
+      @inner for (int item = 0; item < block; ++item) {
+        if (item < alive) {
+          s_vec[item] += s_vec[item + alive];
+        }
+      }
+    }
+
+    // As a final step of the reduction, use atomics to reduce the partial sums 
+    // Different hardwares have varying level of support for atomic operations
+
+    for (int item = 0; item < block; ++item; @inner) {
+      if (item == 0) {
+        @atomic totalSum += s_vec[0]; 
+      }
+    }
+
+  }
+}
