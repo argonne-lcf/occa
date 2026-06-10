@@ -37,6 +37,8 @@ namespace occa {
 
         void addBarriers();
 
+        void setupHeaders();
+
         void setupKernels();
 
         void setupAtomics();

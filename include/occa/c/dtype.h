@@ -51,6 +51,7 @@ extern const occaDtype occaDtypeInt;
 extern const occaDtype occaDtypeLong;
 extern const occaDtype occaDtypeFloat;
 extern const occaDtype occaDtypeDouble;
+extern const occaDtype occaDtypeHalf;
 
 extern const occaDtype occaDtypeInt8;
 extern const occaDtype occaDtypeUint8;
@@ -101,6 +102,10 @@ extern const occaDtype occaDtypeFloat4;
 extern const occaDtype occaDtypeDouble2;
 extern const occaDtype occaDtypeDouble3;
 extern const occaDtype occaDtypeDouble4;
+
+extern const occaDtype occaDtypeHalf2;
+extern const occaDtype occaDtypeHalf3;
+extern const occaDtype occaDtypeHalf4;
 //======================================
 
 OCCA_END_EXTERN_C

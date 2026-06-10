@@ -27,6 +27,7 @@ namespace occa {
    *   Represents a data type, such as:
    *   - `occa::dtype::void_` &rarr; `void`
    *   - `occa::dtype::float_` &rarr; `float`
+   *   - `occa::dtype::half_` &rarr; `half` (IEEE 754 binary16; storage-only on host, real arithmetic on CUDA and DPC++ kernels)
    *   - `occa::dtype::byte` &rarr; A wildcard type, matching anything
    *
    *   [[dtype_t]] data types are used to hold type information on many things, such as

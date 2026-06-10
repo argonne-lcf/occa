@@ -42,6 +42,9 @@ namespace occa {
         addBarriers();
 
         if (!success) return;
+        setupHeaders();
+
+        if (!success) return;
         setupKernels();
 
         if (!success) return;
@@ -147,6 +150,25 @@ namespace occa {
             emptySmnt.replaceWith(barrierSmnt);
             delete &emptySmnt;
           });
+      }
+
+      void cudaParser::setupHeaders() {
+        // half3/half4 must be 8 bytes with field order x,y,z[,w] to stay
+        // layout-compatible with occa::type4<occa::half_t> on the host —
+        // kernelArg passes scalars by pointer + sizeof, so any mismatch
+        // would silently corrupt arguments.
+        const std::string header =
+          "include <cuda_fp16.h>\n"
+          "typedef __half  half;\n"
+          "typedef __half2 half2;\n"
+          "struct half3 { __half x, y, z, w; };\n"
+          "struct half4 { __half x, y, z, w; };\n";
+
+        root.addFirst(
+          *(new directiveStatement(
+              &root,
+              directiveToken(root.source->origin, header)))
+        );
       }
 
       void cudaParser::setupKernels() {

@@ -5,12 +5,14 @@ void testDtype();
 void testCasting();
 void testGet();
 void testJsonMethods();
+void testHalf();
 
 int main(const int argc, const char **argv) {
   testDtype();
   testCasting();
   testGet();
   testJsonMethods();
+  testHalf();
 
   return 0;
 }
@@ -155,4 +157,44 @@ void testJsonMethods() {
   occa::dtype_t foo2 = occa::dtype::fromJson(fooJsonStr);
   ASSERT_NEQ(foo, foo2);
   ASSERT_TRUE(foo.matches(foo2));
+}
+
+void testHalf() {
+  // Identity + distinctness vs float/double.
+  ASSERT_EQ(occa::dtype::half_,
+            occa::dtype::half_);
+  ASSERT_NEQ(occa::dtype::half_,
+             occa::dtype::float_);
+  ASSERT_NEQ(occa::dtype::half_,
+             occa::dtype::double_);
+
+  // Size of half is 2 bytes.
+  ASSERT_EQ(2,
+            occa::dtype::half_.bytes());
+
+  // get<half_t> round-trip.
+  ASSERT_EQ(occa::dtype::half_,
+            occa::dtype::get<occa::half_t>());
+  ASSERT_EQ(occa::dtype::half2,
+            occa::dtype::get<occa::half2>());
+  ASSERT_EQ(occa::dtype::half4,
+            occa::dtype::get<occa::half4>());
+
+  // half <-> half2 casting mirrors float <-> float2.
+  ASSERT_NEQ(occa::dtype::half_,
+             occa::dtype::half2);
+  ASSERT_FALSE(occa::dtype::half_.matches(occa::dtype::half2));
+  ASSERT_TRUE(occa::dtype::half_.canBeCastedTo(occa::dtype::half2));
+  ASSERT_TRUE(occa::dtype::half2.canBeCastedTo(occa::dtype::half_));
+
+  // half <-> byte (wildcard).
+  ASSERT_TRUE(occa::dtype::half_.canBeCastedTo(occa::dtype::byte));
+  ASSERT_TRUE(occa::dtype::byte.canBeCastedTo(occa::dtype::half_));
+
+  // Host shim is exactly 2 bytes and round-trips a representative fp32 value.
+  ASSERT_EQ(2, (int) sizeof(occa::half_t));
+  const float f = 1.5f;
+  const occa::half_t h(f);
+  const float back = (float) h;
+  ASSERT_EQ(f, back);
 }

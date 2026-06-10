@@ -85,6 +85,10 @@ namespace occa {
   template <> const std::string typeinfo<double>::name       = "double";
   template <> const bool        typeinfo<double>::isUnsigned = false;
 
+  template <> const std::string typeinfo<half_t>::id         = "f16";
+  template <> const std::string typeinfo<half_t>::name       = "half";
+  template <> const bool        typeinfo<half_t>::isUnsigned = false;
+
   template <> const std::string typeinfo<uchar2>::id         = "vuc2";
   template <> const std::string typeinfo<uchar2>::name       = "uchar2";
   template <> const bool        typeinfo<uchar2>::isUnsigned = true;
@@ -164,4 +168,12 @@ namespace occa {
   template <> const std::string typeinfo<double4>::id         = "vd4";
   template <> const std::string typeinfo<double4>::name       = "double4";
   template <> const bool        typeinfo<double4>::isUnsigned = false;
+
+  template <> const std::string typeinfo<half2>::id         = "vf16_2";
+  template <> const std::string typeinfo<half2>::name       = "half2";
+  template <> const bool        typeinfo<half2>::isUnsigned = false;
+
+  template <> const std::string typeinfo<half4>::id         = "vf16_4";
+  template <> const std::string typeinfo<half4>::name       = "half4";
+  template <> const bool        typeinfo<half4>::isUnsigned = false;
 }

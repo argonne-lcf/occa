@@ -42,6 +42,7 @@ namespace occa {
     const primitive_t int_          ("int");
     const primitive_t float_        ("float");
     const primitive_t double_       ("double");
+    const primitive_t half_         ("half");
     const primitive_t void_         ("void");
     const primitive_t auto_         ("auto");
 
@@ -89,6 +90,10 @@ namespace occa {
     const primitive_t double2       ("double2");
     const primitive_t double3       ("double3");
     const primitive_t double4       ("double4");
+
+    const primitive_t half2         ("half2");
+    const primitive_t half3         ("half3");
+    const primitive_t half4         ("half4");
 
   } // namespace lang
 }

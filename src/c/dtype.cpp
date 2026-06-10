@@ -91,6 +91,7 @@ const occaDtype occaDtypeInt    = occa::c::newOccaType(occa::dtype::int_);
 const occaDtype occaDtypeLong   = occa::c::newOccaType(occa::dtype::long_);
 const occaDtype occaDtypeFloat  = occa::c::newOccaType(occa::dtype::float_);
 const occaDtype occaDtypeDouble = occa::c::newOccaType(occa::dtype::double_);
+const occaDtype occaDtypeHalf   = occa::c::newOccaType(occa::dtype::half_);
 
 const occaDtype occaDtypeInt8    = occa::c::newOccaType(occa::dtype::int8);
 const occaDtype occaDtypeUint8   = occa::c::newOccaType(occa::dtype::uint8);
@@ -141,6 +142,10 @@ const occaDtype occaDtypeFloat4 = occa::c::newOccaType(occa::dtype::float4);
 const occaDtype occaDtypeDouble2 = occa::c::newOccaType(occa::dtype::double2);
 const occaDtype occaDtypeDouble3 = occa::c::newOccaType(occa::dtype::double3);
 const occaDtype occaDtypeDouble4 = occa::c::newOccaType(occa::dtype::double4);
+
+const occaDtype occaDtypeHalf2 = occa::c::newOccaType(occa::dtype::half2);
+const occaDtype occaDtypeHalf3 = occa::c::newOccaType(occa::dtype::half3);
+const occaDtype occaDtypeHalf4 = occa::c::newOccaType(occa::dtype::half4);
 //======================================
 
 OCCA_END_EXTERN_C

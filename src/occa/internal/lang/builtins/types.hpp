@@ -46,6 +46,7 @@ namespace occa {
     extern const primitive_t int_;
     extern const primitive_t float_;
     extern const primitive_t double_;
+    extern const primitive_t half_;
     extern const primitive_t void_;
     extern const primitive_t auto_;
 
@@ -93,6 +94,10 @@ namespace occa {
     extern const primitive_t double2;
     extern const primitive_t double3;
     extern const primitive_t double4;
+
+    extern const primitive_t half2;
+    extern const primitive_t half3;
+    extern const primitive_t half4;
 
     // DPCPP Primitives
     extern const primitive_t syclQueue;

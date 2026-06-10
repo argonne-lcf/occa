@@ -16,6 +16,7 @@ namespace occa {
     const dtype_t ulong_("unsigned long", sizeof(unsigned long), true);
     const dtype_t float_("float", sizeof(float), true);
     const dtype_t double_("double", sizeof(double), true);
+    const dtype_t half_("half", sizeof(occa::half_t), true);
 
     const dtype_t int8    = get<int8_t>();
     const dtype_t uint8   = get<uint8_t>();
@@ -66,6 +67,10 @@ namespace occa {
     const dtype_t double2("double2", dtype_t::tuple(double_, 2), true);
     const dtype_t double3("double3", dtype_t::tuple(double_, 3), true);
     const dtype_t double4("double4", dtype_t::tuple(double_, 4), true);
+
+    const dtype_t half2("half2", dtype_t::tuple(half_, 2), true);
+    const dtype_t half3("half3", dtype_t::tuple(half_, 3), true);
+    const dtype_t half4("half4", dtype_t::tuple(half_, 4), true);
 
     // OCCA Types
     const dtype_t memory("occa::memory", 0, true);
@@ -130,6 +135,10 @@ namespace occa {
 
     template <> dtype_t get<double>() {
       return double_;
+    }
+
+    template <> dtype_t get<occa::half_t>() {
+      return half_;
     }
 
     template <> dtype_t get<occa::uchar2>() {
@@ -210,6 +219,14 @@ namespace occa {
 
     template <> dtype_t get<occa::double4>() {
       return double4;
+    }
+
+    template <> dtype_t get<occa::half2>() {
+      return half2;
+    }
+
+    template <> dtype_t get<occa::half4>() {
+      return half4;
     }
 
     // OCCA Types

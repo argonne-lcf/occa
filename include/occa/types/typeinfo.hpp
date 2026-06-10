@@ -1,6 +1,7 @@
 #ifndef OCCA_TYPES_TYPEINFO_HEADER
 #define OCCA_TYPES_TYPEINFO_HEADER
 
+#include <occa/types/half.hpp>
 #include <occa/types/typedefs.hpp>
 #include <occa/types/tuples.hpp>
 
@@ -123,6 +124,10 @@ namespace occa {
   template <> const std::string typeinfo<double>::name;
   template <> const bool        typeinfo<double>::isUnsigned;
 
+  template <> const std::string typeinfo<half_t>::id;
+  template <> const std::string typeinfo<half_t>::name;
+  template <> const bool        typeinfo<half_t>::isUnsigned;
+
   template <> const std::string typeinfo<uchar2>::id;
   template <> const std::string typeinfo<uchar2>::name;
   template <> const bool        typeinfo<uchar2>::isUnsigned;
@@ -202,6 +207,14 @@ namespace occa {
   template <> const std::string typeinfo<double4>::id;
   template <> const std::string typeinfo<double4>::name;
   template <> const bool        typeinfo<double4>::isUnsigned;
+
+  template <> const std::string typeinfo<half2>::id;
+  template <> const std::string typeinfo<half2>::name;
+  template <> const bool        typeinfo<half2>::isUnsigned;
+
+  template <> const std::string typeinfo<half4>::id;
+  template <> const std::string typeinfo<half4>::name;
+  template <> const bool        typeinfo<half4>::isUnsigned;
 }
 
 #endif

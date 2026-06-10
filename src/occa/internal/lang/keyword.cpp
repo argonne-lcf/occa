@@ -321,6 +321,7 @@ namespace occa {
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(int_))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(float_))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(double_))));
+      keywords.add(*(new typeKeyword(const_cast<primitive_t&>(half_))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(void_))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(auto_))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(size_t_))));
@@ -366,6 +367,10 @@ namespace occa {
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(double2))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(double3))));
       keywords.add(*(new typeKeyword(const_cast<primitive_t&>(double4))));
+
+      keywords.add(*(new typeKeyword(const_cast<primitive_t&>(half2))));
+      keywords.add(*(new typeKeyword(const_cast<primitive_t&>(half3))));
+      keywords.add(*(new typeKeyword(const_cast<primitive_t&>(half4))));
 
       // TODO: Add builtin functions
       //  - const_cast, static_cast, dynamic_cast, reinterpret_cast

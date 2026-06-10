@@ -121,6 +121,9 @@ module occa_dtype_m
   type(occaDType), bind(C, name="occaDtypeLong") :: occaDtypeLong
   type(occaDType), bind(C, name="occaDtypeFloat") :: occaDtypeFloat
   type(occaDType), bind(C, name="occaDtypeDouble") :: occaDtypeDouble
+  ! Storage-only on host: Fortran has no native fp16, so a half buffer
+  ! is sized as 2-byte slots and only read/written by OKL kernels.
+  type(occaDType), bind(C, name="occaDtypeHalf") :: occaDtypeHalf
 
   type(occaDType), bind(C, name="occaDtypeInt8") :: occaDtypeInt8
   type(occaDType), bind(C, name="occaDtypeUint8") :: occaDtypeUint8
@@ -171,6 +174,10 @@ module occa_dtype_m
   type(occaDType), bind(C, name="occaDtypeDouble2") :: occaDtypeDouble2
   type(occaDType), bind(C, name="occaDtypeDouble3") :: occaDtypeDouble3
   type(occaDType), bind(C, name="occaDtypeDouble4") :: occaDtypeDouble4
+
+  type(occaDType), bind(C, name="occaDtypeHalf2") :: occaDtypeHalf2
+  type(occaDType), bind(C, name="occaDtypeHalf3") :: occaDtypeHalf3
+  type(occaDType), bind(C, name="occaDtypeHalf4") :: occaDtypeHalf4
   ! ======================================
 
 end module occa_dtype_m

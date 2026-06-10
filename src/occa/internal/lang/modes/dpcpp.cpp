@@ -154,13 +154,23 @@ namespace occa
         return "";
       }
 
-      // @note: As of SYCL 2020 this will need to change from `CL/sycl.hpp` to `sycl.hpp`
       void dpcppParser::setupHeaders()
       {
+        // half typedefs are fully qualified (rather than relying on the
+        // `using namespace sycl;` directive) so kernel source stays
+        // self-documenting in template/ADL contexts.
+        const std::string header =
+          "include <sycl/sycl.hpp>\n"
+          "using namespace sycl;\n"
+          "typedef ::sycl::half  half;\n"
+          "typedef ::sycl::half2 half2;\n"
+          "typedef ::sycl::half3 half3;\n"
+          "typedef ::sycl::half4 half4;\n";
+
         root.addFirst(
             *(new directiveStatement(
                 &root,
-                directiveToken(root.source->origin, "include <CL/sycl.hpp>\n using namespace sycl;\n"))));
+                directiveToken(root.source->origin, header))));
       }
 
       void dpcppParser::addExtensions()

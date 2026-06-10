@@ -26,6 +26,7 @@ namespace occa {
     extern const dtype_t ulong_;
     extern const dtype_t float_;
     extern const dtype_t double_;
+    extern const dtype_t half_;
 
     extern const dtype_t int8;
     extern const dtype_t uint8;
@@ -77,6 +78,10 @@ namespace occa {
     extern const dtype_t double3;
     extern const dtype_t double4;
 
+    extern const dtype_t half2;
+    extern const dtype_t half3;
+    extern const dtype_t half4;
+
     // OCCA Types
     extern const dtype_t memory;
 
@@ -120,6 +125,7 @@ namespace occa {
     template <> dtype_t get<unsigned long long>();
     template <> dtype_t get<float>();
     template <> dtype_t get<double>();
+    template <> dtype_t get<occa::half_t>();
     template <> dtype_t get<occa::uchar2>();
     template <> dtype_t get<occa::uchar4>();
     template <> dtype_t get<occa::char2>();
@@ -140,6 +146,8 @@ namespace occa {
     template <> dtype_t get<occa::float4>();
     template <> dtype_t get<occa::double2>();
     template <> dtype_t get<occa::double4>();
+    template <> dtype_t get<occa::half2>();
+    template <> dtype_t get<occa::half4>();
 
     // OCCA Types
     template <> dtype_t get<occa::memory>();
