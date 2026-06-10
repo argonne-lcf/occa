@@ -49,7 +49,12 @@ void testHostShim() {
 void testKernelOnMode(const std::string &mode) {
   std::cout << "Testing half-precision kernel on mode: " << mode << '\n';
 
-  occa::device device({{"mode", mode}});
+  occa::json device_properties;
+  device_properties["device_id"] = 0;
+  device_properties["platform_id"] = 0;
+  device_properties["mode"] = mode;
+
+  occa::device device(device_properties);
   if (device.mode() != mode) {
     // OCCA fell back to Serial because the requested mode failed init.
     std::cout << "  Requested " << mode << " but got " << device.mode()
